@@ -57,8 +57,8 @@ public class BinaryTree<E> {
         val=value;
     }
 
-    public boolean isEmptyc(){
-        return false;
+    public boolean isEmpty(){
+        return this.left.value() == null && this.right.value() == null;
     }
 
 }

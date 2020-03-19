@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
@@ -15,13 +13,14 @@ public class Main {
 
         BinaryTree<Association> tree= new BinaryTree(arr[0]);
         tree.setLeft(new BinaryTree(arr[1]));
-        tree.left.setRight(new BinaryTree(arr[2]));
+        tree.left().setRight(new BinaryTree(arr[2]));
         tree.setRight(new BinaryTree(arr[3]));
-        tree.right.setLeft(new BinaryTree(arr[4]));
-        tree.right.setRight(new BinaryTree(arr[5]));
+        tree.right().setLeft(new BinaryTree(arr[4]));
+        tree.right().setRight(new BinaryTree(arr[5]));
 
-        BufferedReader buf=new BufferedReader(new FileReader("text.txt"));
-        String textoDocumento=buf.readLine();
+
+
+        String textoDocumento="The woman asked me to do my homework about my town.";
         String[] sentence=textoDocumento.split(" ");
 
         System.out.println("Recorrer arbol inorder");
@@ -34,5 +33,28 @@ public class Main {
                 builder.deleteCharAt(builder.length() - 1);
             }
         }
+        BTInorderIterator<Association> iter=new BTInorderIterator<>(tree);
+        while(iter.hasNext()){
+            System.out.println(iter.get().getKey());
+            iter.next();
+        }
+
+        String traduccion="";
+        for(int i=0;i<sentence.length;i++){
+            String word=sentence[i];
+            word=word.toLowerCase();
+            BTInorderIterator<Association> iter2=new BTInorderIterator<>(tree);
+            boolean encontrado=false;
+            while (iter2.hasNext()){
+                if(iter2.get().getKey().toString()==word){
+                    word=iter2.get().getValue().toString();
+
+                    encontrado=true;
+                }
+                iter2.next();
+            }
+            traduccion=traduccion+" "+word;
+        }
+        System.out.println(traduccion);
     }
 }
